@@ -1,0 +1,78 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": true
+	},
+	"formatter": {
+		"enabled": true,
+		"useEditorconfig": true,
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineEnding": "lf",
+		"lineWidth": 120
+	},
+	"javascript": {
+		"formatter": {
+			"enabled": true,
+			"quoteStyle": "single",
+			"arrowParentheses": "asNeeded",
+			"trailingCommas": "none",
+			"semicolons": "asNeeded"
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		},
+		"formatter": {
+			"enabled": true,
+			"quoteStyle": "double"
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"suspicious": {
+				"preset": "recommended",
+				"noConsole": "warn"
+			},
+			"nursery": {
+				"useSortedClasses": {
+					"level": "warn",
+					"fix": "safe",
+					"options": {
+						"attributes": ["classList"],
+						"functions": ["clsx", "cva", "cn"]
+					}
+				}
+			},
+			"a11y": {
+				"noSvgWithoutTitle": "info"
+			}
+		}
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": {
+					"level": "on",
+					"options": {
+						"groups": [
+							[":NODE:", ":BUN:"],
+							[":PACKAGE:", ":PACKAGE_WITH_PROTOCOL:"],
+							["@workspace/*", "@workspace/**"],
+							":ALIAS:",
+							":PATH:"
+						],
+						"identifierOrder": "natural"
+					}
+				}
+			}
+		}
+	}
+}

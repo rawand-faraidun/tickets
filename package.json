@@ -1,0 +1,37 @@
+{
+	"name": "tickets-project",
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"type": "module",
+	"scripts": {
+		"dev": "turbo dev",
+		"build": "turbo build",
+		"start": "turbo start",
+		"check-types": "turbo check-types",
+		"dev:web": "turbo -F web dev",
+		"dev:server": "turbo -F server dev",
+		"db:push": "turbo -F @tickets-project/db db:push",
+		"db:studio": "turbo -F @tickets-project/db db:studio",
+		"db:generate": "turbo -F @tickets-project/db db:generate",
+		"db:migrate": "turbo -F @tickets-project/db db:migrate",
+		"db:local": "turbo -F @tickets-project/db db:local",
+		"db:seed": "turbo -F server seed",
+		"check": "biome check --write ."
+	},
+	"dependencies": {
+		"@tickets-project/env": "workspace:*",
+		"dotenv": "catalog:",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.16",
+		"@tickets-project/config": "workspace:*",
+		"@types/node": "^22.13.14",
+		"turbo": "^2.9.16",
+		"typescript": "catalog:"
+	},
+	"packageManager": "pnpm@11.5.1"
+}

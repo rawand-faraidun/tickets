@@ -1,0 +1,13 @@
+{
+	"editor.defaultFormatter": "biomejs.biome",
+	"tailwindCSS.classFunctions": ["clsx", "cva", "cn"],
+	"json.schemaDownload.trustedDomains": {
+		"https://unpkg.com": true,
+		"https://biomejs.dev": true,
+		"https://turborepo.com": true,
+		"https://ui.shadcn.com": true
+	},
+	"[prisma]": {
+		"editor.defaultFormatter": "Prisma.prisma"
+	}
+}
