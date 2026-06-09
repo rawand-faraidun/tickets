@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated"
+  moduleFormat = "esm"
+  runtime = "nodejs"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum UserRole {
+  CUSTOMER
+  AGENT
+}
+
+enum TicketCategory {
+  TECHNICAL_ISSUE
+  BILLING
+  ACCOUNT_ACCESS
+  PRODUCT_QUESTION
+  FEATURE_REQUEST
+  OTHER
+}
+
+enum TicketPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum ContactPreference {
+  EMAIL
+  PHONE_CALL
+  VIDEO_CALL
+  NO_PREFERENCE
+}
+
+model Ticket {
+  id                String            @id
+  ticketNumber      String            @unique
+  title             String
+  description       String
+  category          TicketCategory
+  priority          TicketPriority
+  status            TicketStatus      @default(OPEN)
+  customerId        String
+  customer          User              @relation("CustomerTickets", fields: [customerId], references: [id], onDelete: Cascade)
+  bookedAt          DateTime?
+  contactPreference ContactPreference
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  comments          TicketComment[]
+
+  @@index([customerId])
+  @@index([status])
+  @@index([category])
+  @@index([priority])
+  @@index([bookedAt])
+  @@map("ticket")
+}
+
+model TicketComment {
+  id        String   @id
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  body      String
+  createdAt DateTime @default(now())
+
+  @@index([ticketId])
+  @@index([authorId])
+  @@map("ticket_comment")
+}
