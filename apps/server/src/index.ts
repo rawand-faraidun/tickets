@@ -1,6 +1,9 @@
 // biome-ignore-all lint/suspicious/noConsole: ignore
 
 import { serve } from '@hono/node-server'
+import { trpcServer } from '@hono/trpc-server'
+import { createContext } from '@tickets-project/api/context'
+import { appRouter } from '@tickets-project/api/routers/index'
 import { auth } from '@tickets-project/auth'
 import { env } from '@tickets-project/env/server'
 import { Hono } from 'hono'
@@ -26,6 +29,17 @@ app.use(
 
 // auth route
 app.on(['POST', 'GET'], '/api/auth/*', c => auth.handler(c.req.raw))
+
+// trpc routes
+app.use(
+	'/trpc/*',
+	trpcServer({
+		router: appRouter,
+		createContext: (_opts, context) => {
+			return createContext({ context })
+		}
+	})
+)
 
 // health
 app.get('/', c => {
