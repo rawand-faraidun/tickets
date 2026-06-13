@@ -1,0 +1,32 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    command: sh -c "pnpm run db:push && pnpm run db:seed && pnpm --filter server dev"
+    environment:
+      DATABASE_URL: file:/data/local.db
+      BETTER_AUTH_SECRET: docker-demo-secret-at-least-32-chars
+      BETTER_AUTH_URL: http://localhost:3000
+      CORS_ORIGIN: http://localhost:3001
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ticket-data:/data
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    command: pnpm --filter web exec next dev --port 3001 --hostname 0.0.0.0
+    environment:
+      NEXT_PUBLIC_SERVER_URL: http://localhost:3000
+      SERVER_API_URL: http://server:3000
+    ports:
+      - "3001:3001"
+    depends_on:
+      - server
+
+volumes:
+  ticket-data:
