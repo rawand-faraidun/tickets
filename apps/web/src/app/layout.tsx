@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import Header from '@/components/header'
+import Providers from '@/components/providers'
 import '../index.css'
 
 /**
@@ -12,7 +14,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body className="antialiased">{children}</body>
+			<body className="antialiased">
+				<Providers>
+					<div className="grid h-svh grid-rows-[auto_1fr]">
+						<Header />
+						{children}
+					</div>
+				</Providers>
+			</body>
 		</html>
 	)
 }
