@@ -1,6 +1,6 @@
 # Helpdesk Ticketing System
 
-A scoped customer support ticketing system for the 5-day full-stack challenge. The app supports customer ticket submission and tracking, agent queue triage, public replies, status updates, role-aware access, persisted data, seed users, and local/Docker setup.
+A scoped customer support ticketing system for the 5-day full-stack challenge. The app supports customer ticket submission and tracking, agent queue triage, public replies, status updates, role-aware access, persisted data, seed users, and local development setup.
 
 ## Tech Stack
 
@@ -82,44 +82,6 @@ pnpm run db:push
 pnpm run db:seed
 ```
 
-## Run With Docker
-
-Prerequisites:
-
-- Docker Desktop or a compatible Docker Engine with Compose support
-
-Build and start the full stack:
-
-```bash
-docker compose up --build
-```
-
-Open:
-
-- Web app: `http://localhost:3001`
-- API: `http://localhost:3000`
-
-The server container runs `pnpm run db:push` and `pnpm run db:seed` before starting, so the demo users are available automatically.
-
-Docker uses a named volume called `ticket-data` for SQLite persistence. To stop the app:
-
-```bash
-docker compose down
-```
-
-To reset Docker database state:
-
-```bash
-docker compose down -v
-docker compose up --build
-```
-
-Docker environment behavior:
-
-- Browser-facing API URL: `NEXT_PUBLIC_SERVER_URL=http://localhost:3000`
-- Next server-side API URL inside Docker: `SERVER_API_URL=http://server:3000`
-- API CORS origin: `http://localhost:3001`
-
 ## Demo Users
 
 All seeded users use the password `Password123!`.
@@ -180,3 +142,4 @@ Backend authorization enforces these rules in tRPC procedures. UI routing is onl
 - Add multilingual UI copy and locale-aware date formatting.
 - Add internal notes and assignment/ownership for agents.
 - Add production-ready migrations and deployment hardening.
+- dockerize the project
